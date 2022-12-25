@@ -61,8 +61,8 @@
 
 <style>
   tr {
-    background-color: hsl(200, 60%, 75%);
-    box-shadow: 0 0 0 100vmax hsl(200, 60%, 75%);
+    background-color: hsl(200, 70%, 80%);
+    box-shadow: 0 0 0 100vmax hsl(200, 70%, 80%);
     clip-path: inset(0 -100vmax);
   }
 
