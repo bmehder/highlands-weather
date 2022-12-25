@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { getIconUrl } from './iconMap'
+
   type Current = {
     currentTemp: number
     highFeelsLike: number
@@ -11,61 +13,55 @@
   }
 
   export let current: Current
-  export let getIconUrl: (iconCode: number) => string
 </script>
 
-<header class="header">
+<header>
   <div class="header-left">
-    <img
-      src={getIconUrl(current.iconCode)}
-      class="weather-icon large"
-      alt=""
-      data-current-icon
-    />
-    <div class="header-current-temp">
-      <span data-current-temp>{current.currentTemp}</span>&deg;
+    <img src={getIconUrl(current.iconCode)} class="weather-icon large" alt="" />
+    <div>
+      <span>{current.currentTemp}</span>&deg;
     </div>
   </div>
   <div class="header-right">
     <div class="info-group">
       <div class="label">High</div>
       <div>
-        <span data-current-high>{current.highTemp}</span>
+        <span>{current.highTemp}</span>
         &deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">FL High</div>
       <div>
-        <span data-current-fl-high>{current.highFeelsLike}</span>
+        <span>{current.highFeelsLike}</span>
         &deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">Wind</div>
       <div>
-        <span data-current-wind>{current.windSpeed}</span>
+        <span>{current.windSpeed}</span>
         <span class="value-sub-info">mph</span>
       </div>
     </div>
     <div class="info-group">
       <div class="label">Low</div>
       <div>
-        <span data-current-low>{current.lowTemp}</span>
+        <span>{current.lowTemp}</span>
         &deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">FL Low</div>
       <div>
-        <span data-current-fl-low>{current.lowFeelsLike}</span>
+        <span>{current.lowFeelsLike}</span>
         &deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">Precip</div>
       <div>
-        <span data-current-precip>{(current.precip * 100) / 100}</span>
+        <span>{(current.precip * 100) / 100}</span>
         <span class="value-sub-info">in</span>
       </div>
     </div>
@@ -73,7 +69,7 @@
 </header>
 
 <style>
-  .header {
+  header {
     display: flex;
     align-items: center;
     margin-inline: auto;
@@ -94,7 +90,7 @@
     }
   }
 
-  .header-current-temp {
+  .header-left div {
     font-size: 2rem;
     margin-left: 1rem;
   }

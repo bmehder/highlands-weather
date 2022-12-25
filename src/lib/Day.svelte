@@ -1,11 +1,13 @@
 <script lang="ts">
+  import { getIconUrl } from './iconMap'
+
   type Day = {
     iconCode: number
     maxTemp: number
     timestamp: number
   }
+
   export let day: Day
-  export let getIconUrl: (iconCode: number) => string
 
   const DAY_FORMATTER = new Intl.DateTimeFormat(undefined, {
     weekday: 'long',

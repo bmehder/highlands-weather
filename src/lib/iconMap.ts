@@ -16,3 +16,7 @@ function addMapping(values: number[], icon: string) {
     ICON_MAP.set(value, icon)
   })
 }
+
+export function getIconUrl(iconCode: number) {
+  return `icons/${ICON_MAP.get(iconCode)}.svg`
+}

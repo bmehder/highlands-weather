@@ -1,38 +1,33 @@
 <script lang="ts">
   import type { PageData } from './$types'
-  import Day from './Day.svelte'
-  import Header from './Header.svelte'
-  import Hourly from './Hourly.svelte'
-  import { ICON_MAP } from './iconMap'
+  import Day from '$lib/Day.svelte'
+  import Header from '$lib/Header.svelte'
+  import Hourly from '$lib/Hourly.svelte'
 
   export let data: PageData
   console.log(data)
-
-  function getIconUrl(iconCode: number) {
-    return `icons/${ICON_MAP.get(iconCode)}.svg`
-  }
 </script>
 
-<div class="main">
-  <Header current={data.current} {getIconUrl} />
+<div class="wrapper">
+  <Header current={data.current} />
 
-  <section class="day-section" data-day-section>
+  <section class="day-section">
     {#each data.daily as day}
-      <Day {day} {getIconUrl} />
+      <Day {day} />
     {/each}
   </section>
 
   <table class="hour-section">
-    <tbody data-hour-section>
+    <tbody>
       {#each data.hourly as hour}
-        <Hourly {hour} {getIconUrl} />
+        <Hourly {hour} />
       {/each}
     </tbody>
   </table>
 </div>
 
 <style>
-  .main {
+  .wrapper {
     max-width: 768px;
     margin-inline: auto;
   }

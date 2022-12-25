@@ -31,6 +31,7 @@ type Day = {
   apparent_temperature_min: number[]
   windspeed_10ma: number
   precipitation: number
+  daily: { time: []; weathercode: number[]; temperature_2m_max: number[] }
 }
 
 type Hour = {
@@ -50,7 +51,7 @@ type Hour = {
 
 type All_Weather = {
   current_weather: Current
-  daily?: Day
+  daily: Day
   hourly: Hour
 }
 
@@ -87,7 +88,7 @@ const parseCurrentWeather = ({ current_weather, daily, hourly }: All_Weather) =>
   }
 }
 
-const parseDailyWeather = ({ daily }: any) => {
+const parseDailyWeather = ({ daily }: Day) => {
   return daily.time.map((time: number, index: number) => {
     return {
       timestamp: time * 1000,
@@ -112,7 +113,7 @@ const parseHourlyWeather = ({ hourly, current_weather }: All_Weather) => {
     .filter(({ timestamp }) => timestamp >= current_weather.time * 1000)
 }
 
-export async function load({ fetch }: RequestEvent) {
+export const load = async ({ fetch }: RequestEvent) => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const res = await fetch(
