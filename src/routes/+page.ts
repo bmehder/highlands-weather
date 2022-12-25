@@ -24,11 +24,11 @@ type Day = {
   iconCode: number
   maxTemp: number
   timestamp: number
-  temperature_2m_max: number
-  temperature_2m_min: number
+  temperature_2m_max: number[]
+  temperature_2m_min: number[]
   apparent_temperature: number
-  apparent_temperature_max: number
-  apparent_temperature_min: number
+  apparent_temperature_max: number[]
+  apparent_temperature_min: number[]
   windspeed_10ma: number
   precipitation: number
 }
@@ -112,11 +112,12 @@ const parseHourlyWeather = ({ hourly, current_weather }: All_Weather) => {
     .filter(({ timestamp }) => timestamp >= current_weather.time * 1000)
 }
 
-export const load: PageLoad = async ({ fetch }) => {
+export async function load({ fetch }: RequestEvent) {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const res = await fetch(
-    URL + '&latitude=35.0526&longitude=-83.1968&timezone=' + timezone
+    URL + '&latitude=35.053120&longitude=-83.19683&timezone=' + timezone
+    // URL + '&latitude=51.5072&longitude=-0.1276&timezone=' + timezone
   )
   const data = await res.json()
 
