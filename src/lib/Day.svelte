@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getIconUrl } from './iconMap'
+  import { DAY_FORMATTER } from './utils'
 
   type Day = {
     iconCode: number
@@ -8,10 +9,6 @@
   }
 
   export let day: Day
-
-  const DAY_FORMATTER = new Intl.DateTimeFormat(undefined, {
-    weekday: 'long',
-  })
 </script>
 
 <div class="day-card">

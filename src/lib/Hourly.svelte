@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getIconUrl } from './iconMap'
+  import { DAY_FORMATTER, HOUR_FORMATTER } from './utils'
 
   type Hour = {
     feelsLike: number
@@ -12,48 +13,42 @@
 
   export let hour: Hour
 
-  const DAY_FORMATTER = new Intl.DateTimeFormat(undefined, {
-    weekday: 'long',
-  })
-
-  const HOUR_FORMATTER = new Intl.DateTimeFormat(undefined, {
-    hour: 'numeric',
-  })
+  const { timestamp, iconCode, temp, feelsLike, precip, windSpeed } = hour
 </script>
 
 <tr>
   <td>
     <div>
-      <div class="label">{DAY_FORMATTER.format(hour.timestamp)}</div>
-      <div>{HOUR_FORMATTER.format(hour.timestamp)}</div>
+      <div class="label">{DAY_FORMATTER.format(timestamp)}</div>
+      <div>{HOUR_FORMATTER.format(timestamp)}</div>
     </div>
   </td>
   <td>
-    <img src={getIconUrl(hour.iconCode)} alt="" class="weather-icon" />
+    <img src={getIconUrl(iconCode)} alt="" class="weather-icon" />
   </td>
   <td>
     <div>
       <div class="label">Temp</div>
-      <div>{hour.temp} &deg;</div>
+      <div>{temp}&deg;</div>
     </div>
   </td>
   <td>
     <div>
       <div class="label">FL Temp</div>
-      <div>{hour.feelsLike}&deg;</div>
+      <div>{feelsLike}&deg;</div>
     </div>
   </td>
   <td>
     <div>
       <div class="label">Wind</div>
-      <div>{hour.windSpeed}<span class="value-sub-info">mph</span></div>
+      <div>{windSpeed}<span class="value-sub-info">mph</span></div>
     </div>
   </td>
   <td>
     <div>
       <div class="label">Precip</div>
       <div>
-        {(hour.precip * 100) / 100}<span class="value-sub-info">in</span>
+        {(precip * 100) / 100}<span class="value-sub-info">in</span>
       </div>
     </div>
   </td>

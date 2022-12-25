@@ -2,66 +2,73 @@
   import { getIconUrl } from './iconMap'
 
   type Current = {
-    currentTemp: number
-    highFeelsLike: number
-    highTemp: number
     iconCode: number
-    lowFeelsLike: number
+    currentTemp: number
+    highTemp: number
     lowTemp: number
+    highFeelsLike: number
+    lowFeelsLike: number
     windSpeed: number
     precip: number
   }
 
   export let current: Current
+
+  const {
+    iconCode,
+    currentTemp,
+    highTemp,
+    lowTemp,
+    highFeelsLike,
+    lowFeelsLike,
+    windSpeed,
+    precip,
+  } = current
 </script>
 
 <header>
   <div class="header-left">
-    <img src={getIconUrl(current.iconCode)} class="weather-icon large" alt="" />
+    <img src={getIconUrl(iconCode)} class="weather-icon large" alt="" />
     <div>
-      <span>{current.currentTemp}</span>&deg;
+      <span>{currentTemp}</span>&deg;
     </div>
   </div>
   <div class="header-right">
     <div class="info-group">
       <div class="label">High</div>
       <div>
-        <span>{current.highTemp}</span>
-        &deg;
+        <span>{highTemp}</span>&deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">FL High</div>
       <div>
-        <span>{current.highFeelsLike}</span>
-        &deg;
+        <span>{highFeelsLike}</span>&deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">Wind</div>
       <div>
-        <span>{current.windSpeed}</span>
+        <span>{windSpeed}</span>
         <span class="value-sub-info">mph</span>
       </div>
     </div>
     <div class="info-group">
       <div class="label">Low</div>
       <div>
-        <span>{current.lowTemp}</span>
-        &deg;
+        <span>{lowTemp}</span>&deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">FL Low</div>
       <div>
-        <span>{current.lowFeelsLike}</span>
-        &deg;
+        <span>{lowFeelsLike}</span>&deg;
       </div>
     </div>
     <div class="info-group">
       <div class="label">Precip</div>
       <div>
-        <span>{(current.precip * 100) / 100}</span>
+        <span>{(precip * 100) / 100}</span>
         <span class="value-sub-info">in</span>
       </div>
     </div>
@@ -72,33 +79,25 @@
   header {
     display: flex;
     align-items: center;
-    margin-inline: auto;
   }
 
   .header-left {
-    width: 50%;
     display: flex;
+    flex-basis: 50%;
+    justify-content: center;
+    gap: 1rem;
     align-items: center;
-    margin: 0.5rem;
-    padding: 0.5rem;
+    margin-block: 0.5rem;
     border-right: 2px solid hsl(var(--hue), var(--saturation), 10%);
-  }
-
-  @media (min-width: 600px) {
-    .header-left {
-      padding-left: 50px;
-    }
   }
 
   .header-left div {
     font-size: 2rem;
-    margin-left: 1rem;
   }
 
   .header-right {
-    width: 50%;
     display: grid;
-    justify-content: space-around;
+    flex-basis: 50%;
     gap: 0.5rem;
     grid-template-columns: repeat(3, auto);
     grid-template-rows: repeat(2, auto);

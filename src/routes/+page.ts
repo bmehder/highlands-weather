@@ -1,5 +1,4 @@
 import type { RequestEvent } from '@sveltejs/kit'
-import type { PageLoad } from './$types'
 
 type Current = {
   currentTemp: number
@@ -31,7 +30,7 @@ type Day = {
   apparent_temperature_min: number[]
   windspeed_10ma: number
   precipitation: number
-  daily: { time: []; weathercode: number[]; temperature_2m_max: number[] }
+  daily: { time: number[]; weathercode: number[]; temperature_2m_max: number[] }
 }
 
 type Hour = {

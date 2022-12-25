@@ -37,6 +37,7 @@
     grid-template-columns: repeat(auto-fit, 75px);
     gap: 0.5rem;
     justify-content: center;
+    margin-inline: auto;
     padding: 1rem;
   }
 
