@@ -1,10 +1,63 @@
 import type { RequestEvent } from '@sveltejs/kit'
 import type { PageLoad } from './$types'
 
+type Current = {
+  currentTemp: number
+  highFeelsLike: number
+  highTemp: number
+  iconCode: number
+  lowFeelsLike: number
+  lowTemp: number
+  windSpeed: number
+  precip: number
+  time: number
+  temperature: number
+  windspeed: number
+  weathercode: number
+  temperature_2m_max: number
+  temperature_2m_min: number
+  apparent_temperature_max: number
+  apparent_temperature_min: number
+}
+
+type Day = {
+  iconCode: number
+  maxTemp: number
+  timestamp: number
+  temperature_2m_max: number
+  temperature_2m_min: number
+  apparent_temperature: number
+  apparent_temperature_max: number
+  apparent_temperature_min: number
+  windspeed_10ma: number
+  precipitation: number
+}
+
+type Hour = {
+  feelsLike: number
+  iconCode: number
+  precip: number
+  temp: number
+  timestamp: number
+  windSpeed: number
+  time: number[]
+  weathercode: number[]
+  precipitation: number[]
+  temperature_2m: number[]
+  apparent_temperature: number[]
+  windspeed_10m: number[]
+}
+
+type All_Weather = {
+  current_weather: Current
+  daily?: Day
+  hourly: Hour
+}
+
 const URL =
   'https://api.open-meteo.com/v1/forecast?hourly=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_sum&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timeformat=unixtime'
 
-const parseCurrentWeather = ({ current_weather, daily, hourly }) => {
+const parseCurrentWeather = ({ current_weather, daily, hourly }: All_Weather) => {
   const {
     temperature: currentTemp,
     windspeed: windSpeed,
@@ -16,11 +69,11 @@ const parseCurrentWeather = ({ current_weather, daily, hourly }) => {
     temperature_2m_min: [minTemp],
     apparent_temperature_max: [maxFeelsLike],
     apparent_temperature_min: [minFeelsLike],
-  } = daily
+  } = daily as Day
 
   const {
     precipitation: [precip],
-  } = hourly
+  } = hourly as Hour
 
   return {
     currentTemp: Math.round(currentTemp),
@@ -34,8 +87,8 @@ const parseCurrentWeather = ({ current_weather, daily, hourly }) => {
   }
 }
 
-const parseDailyWeather = ({ daily }) => {
-  return daily.time.map((time, index) => {
+const parseDailyWeather = ({ daily }: any) => {
+  return daily.time.map((time: number, index: number) => {
     return {
       timestamp: time * 1000,
       iconCode: daily.weathercode[index],
@@ -44,7 +97,7 @@ const parseDailyWeather = ({ daily }) => {
   })
 }
 
-const parseHourlyWeather = ({ hourly, current_weather }) => {
+const parseHourlyWeather = ({ hourly, current_weather }: All_Weather) => {
   return hourly.time
     .map((time, index) => {
       return {
@@ -63,7 +116,7 @@ export const load: PageLoad = async ({ fetch }) => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   const res = await fetch(
-    URL + '&latitude=35.0526&longitude=83.1968&timezone=' + timezone
+    URL + '&latitude=35.0526&longitude=-83.1968&timezone=' + timezone
   )
   const data = await res.json()
 

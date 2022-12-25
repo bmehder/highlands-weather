@@ -11,7 +11,7 @@ addMapping(
 addMapping([71, 73, 75, 77, 85, 86], 'snowflake')
 addMapping([95, 96, 99], 'cloud-bolt')
 
-function addMapping(values, icon) {
+function addMapping(values: number[], icon: string) {
   values.forEach(value => {
     ICON_MAP.set(value, icon)
   })
